@@ -111,7 +111,7 @@ async function showCodes(codes, container) {
 
   const seriesCode = [seriesLabel.map(x => codes.filter(c => c.label == x).map(p => ({x: p.profile[0], y: p.profile[1]})))]
   console.log(seriesCode)
-  const data = { values: seriesCode, series: seriesLabel }
+  const data = { values: seriesCode, series: seriesLabel.map(x => String(x)) }
 
   tfvis.render.scatterplot(container, data);
 }
