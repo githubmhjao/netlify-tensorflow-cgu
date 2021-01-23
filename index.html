@@ -22,10 +22,30 @@
   <div id="container-parameter" class="container">
     <div class="card-header">Parameter</div>
     <div class="card-body">
-      <div class="unit-control"><label for="samples" class="unit">Samples</label>         <input type="number" id="samples" class="input-number" /></div>
-      <div class="unit-control"><label for="firstLayer" class="unit">First Layer</label>  <input type="number" id="firstLayer" class="input-number" /></div>
-      <div class="unit-control"><label for="secondLayer" class="unit">Second Layer</label><input type="number" id="secondLayer" class="input-number" /></div>
-      <div class="unit-control"><label for="epochs" class="unit">Epochs</label>           <input type="number" id="epochs" class="input-number" /></div>
+      <div class="unit-control">
+        <label for="samples" class="unit">Samples</label>         
+        <input type="number" id="samples" class="input-number" value="2" />
+      </div>
+      <div class="unit-control">
+        <label for="dimension" class="unit">Dimension</label>     
+        <input type="number" id="dimension" class="input-number" value="256" readonly />
+      </div>
+      <div class="unit-control">
+        <label for="firstLayer" class="unit">First Layer</label>  
+        <input type="number" id="firstLayer" class="input-number" value="10" />
+      </div>
+      <div class="unit-control">
+        <label for="secondLayer" class="unit">Second Layer</label>
+        <input type="number" id="secondLayer" class="input-number" value="5" />
+      </div>
+      <div class="unit-control">
+        <label for="latent" class="unit">Latent</label>           
+        <input type="number" id="latent" class="input-number" value="2" readonly />
+      </div>
+      <div class="unit-control">
+        <label for="epochs" class="unit">Epochs</label>           
+        <input type="number" id="epochs" class="input-number" value="10" />
+      </div>
     </div>
     <div class="card-footer" id="startTrain">Start Train</div>
   </div>
