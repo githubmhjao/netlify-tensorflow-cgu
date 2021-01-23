@@ -65,8 +65,6 @@ function getModel() {
 }
 
 function convertToTensor(data) {
-  // Wrapping these calculations in a tidy will dispose any 
-  // intermediate tensors.
   
   return tf.tidy(() => {
     // Step 1. Shuffle the data    
@@ -79,7 +77,7 @@ function convertToTensor(data) {
     const inputTensor = tf.tensor2d(inputs, [inputs.length, 256]);
     const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
 
-    return [inputTensor, labelTensor]
+    return [inputs, inputTensor, labels, labelTensor]
   });  
 }
 
@@ -101,11 +99,29 @@ async function trainModel(model, inputs, labels) {
   });
 }
 
-function convertToArray(tensor, label, num) {
+function convertToArray(tensor, label, num, dimension) {
   const data = Array.from(tensor.dataSync())
   console.log(data)
-  return Array(num).fill(0).map((x, i) => ({'profile': data.slice(i * 256, (i + 1) * 256), 'label': label.dataSync()[i]}))
+  return Array(num).fill(0).map((x, i) => ({'profile': data.slice(i * dimension, (i + 1) * dimension), 'label': label[i]}))
 }
+
+
+async function showCodes(codes, container) {
+  console.log(codes)
+  const seriesLabel = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  const series1 = Array(100).fill(0)
+   .map(y => Math.random() * 100 - (Math.random() * 50))
+   .map((y, x) => ({ x, y, }));
+
+  const series2 = Array(100).fill(0)
+   .map(y => Math.random() * 100 - (Math.random() * 150))
+   .map((y, x) => ({ x, y, }));
+  const seriesCode = [seriesLabel.map(x => codes.filter(c => c.label == x).map(p => ({x: p.profile[0], y: p.profile[1]})))]
+  const data = { values: seriesCode, seriesLabel }
+
+  tfvis.render.scatterplot(container, data);
+}
+
 
 async function run() {
   const numExamples = 2
@@ -118,22 +134,24 @@ async function run() {
   tf.util.shuffle(ramanData);
   
   const TRAIN_DATA_SIZE = 1000
-  const [trainData, trainLabel] = convertToTensor(ramanData.slice(0, TRAIN_DATA_SIZE));
-  const [testData, testLabel] = convertToTensor(ramanData.slice(TRAIN_DATA_SIZE))
+  const [trainData, trainDataTensor, trainLabel, trainLabelTensor] = convertToTensor(ramanData.slice(0, TRAIN_DATA_SIZE));
+  const [testData, testDataTensor, testLabel, testLabelTensor] = convertToTensor(ramanData.slice(TRAIN_DATA_SIZE))
   
-  const inputs = {train: trainData, test: testData}
-  const labels = {train: trainLabel, test: testLabel}
+  const inputs = {train: trainDataTensor, test: testDataTensor}
+  const labels = {train: trainLabelTensor, test: testLabelTensor}
   // Train the model  
   await trainModel(model, inputs, labels);
   
-  const [exampleData, exampleLabel] = convertToTensor(examples)
-  const examplePred = model.predict(exampleData)
+  const [exampleData, exampleDataTensor, exampleLabel, exampleLabelTensor] = convertToTensor(examples)
+  const examplePredTensor = model.predict(exampleDataTensor)
   
-  const examplePredArray = convertToArray(examplePred, exampleLabel, numExamples)
-  console.log(examplePredArray)
+  const examplePredArray = convertToArray(examplePredTensor, exampleLabel, numExamples, 256)
   await showExamples(examplePredArray, document.getElementById("container-reconstruct"));
   
-  const trainCode = encoder.predict(trainData)
+  const trainCode = convertToArray(encoder.predict(trainData), trainLabel, TRAIN_DATA_SIZE, 2)
+  
+  await showCodes(trainCode, document.getElementById("container-code"))
+    
 }
 
 document.addEventListener('DOMContentLoaded', run);
