@@ -71,12 +71,63 @@ function getModel() {
   return model;
 }
 
+async function train(model, data) {
+  const metrics = ['loss', 'val_loss'];
+  const fitCallbacks = tfvis.show.fitCallbacks(document.getElementById("container-train"), metrics);
+  
+  const BATCH_SIZE = 50;
+  const TRAIN_DATA_SIZE = 1000;
+  const TEST_DATA_SIZE = data.length - TRAIN_DATA_SIZE;
+  
+  // Step 1. Shuffle the data    
+  tf.util.shuffle(data);
+  
+  // Step 2. Convert data to Tensor
+  const [trainXs, trainYs] = tf.tidy(() => {
+    
+    const inputs = data.slice(0, TRAIN_DATA_SIZE).map(d => d.profile)
+    const labels = data.slice(0, TRAIN_DATA_SIZE).map(d => d.label);
+
+    const inputTensor = tf.tensor2d(inputs, [inputs.length, 256]);
+    const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
+
+    return {
+      inputs: inputTensor,
+      labels: labelTensor,
+    }
+  })
+  
+  const [testXs, testYs] = tf.tidy(() => {
+    
+    const inputs = data.slice(TRAIN_DATA_SIZE).map(d => d.profile)
+    const labels = data.slice(TRAIN_DATA_SIZE).map(d => d.label);
+
+    const inputTensor = tf.tensor2d(inputs, [inputs.length, 256]);
+    const labelTensor = tf.tensor2d(labels, [labels.length, 1]);
+
+    return {
+      inputs: inputTensor,
+      labels: labelTensor,
+    }
+  })  
+  
+  
+  return model.fit(trainXs, trainXs, {
+    batchSize: BATCH_SIZE,
+    validationData: [testXs, testXs],
+    epochs: 10,
+    shuffle: true,
+    callbacks: fitCallbacks
+  });
+}
+
 async function run() {  
   await showExamples();
   
   const model = getModel();
   tfvis.show.modelSummary(document.getElementById('container-model'), model);
   
+  train(model, ramanData)
 }
 
 document.addEventListener('DOMContentLoaded', run);
