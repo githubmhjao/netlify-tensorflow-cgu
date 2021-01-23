@@ -93,9 +93,9 @@ async function train(model, data) {
 
     return {
       inputs: inputTensor,
-      labels: labelTensor,
-    }
-  })
+      labels: labelTensor
+    };
+  });
   
   const [testXs, testYs] = tf.tidy(() => {
     
@@ -107,12 +107,12 @@ async function train(model, data) {
 
     return {
       inputs: inputTensor,
-      labels: labelTensor,
-    }
-  })  
+      labels: labelTensor
+    };
+  });
   
   
-  return model.fit(trainXs, trainXs, {
+  await return model.fit(trainXs, trainXs, {
     batchSize: BATCH_SIZE,
     validationData: [testXs, testXs],
     epochs: 10,
