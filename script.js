@@ -147,4 +147,29 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
     
 }
 
-document.addEventListener('DOMContentLoaded', run(2, 50, 10, 10));
+let valueSA = 2
+let valueFL = 50
+let valueSL = 10
+let valueEP = 10
+
+document.addEventListener('DOMContentLoaded', run(valueSA, valueFL, valueSL, valueEP));
+
+document.getElementById("samples").onchange = function (evt) {
+    valueSA = Number(evt.target.value)
+}
+
+document.getElementById("firstLayer").onchange = function (evt) {
+    valueFL = Number(evt.target.value)
+}
+
+document.getElementById("secondLayer").onchange = function (evt) {
+    valueSL = Number(evt.target.value)
+}
+
+document.getElementById("epochs").onchange = function (evt) {
+    valueEP = Number(evt.target.value)
+}
+
+document.getElementById("startTrain").onclick = function () {
+  run (valueSA, valueFL, valueSL, valueEP)  
+}
