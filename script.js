@@ -7,9 +7,9 @@ function getRandomInt(max) {
 
 async function showExamples(examples, container) {
 
-  const series = examples.map((x, i) => `${i}: A/R = ${ramanData[x].label}`);
+  const series = examples.map((x, i) => `${i}: A/R = ${x.label}`);
   const data = { 
-    values: examples.map(x => ramanData[x].profile.map((y, x) => ({x: ramanUnit[x], y: y}))), 
+    values: examples.map(x => x.profile.map((y, i) => ({x: ramanUnit[i], y: y}))), 
     series 
   }
     
@@ -103,7 +103,7 @@ async function trainModel(model, inputs, labels) {
 
 async function run() {
   const numExamples = 2
-  const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length));
+  const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
   
   const model = getModel();
