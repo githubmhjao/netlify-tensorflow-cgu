@@ -21,27 +21,32 @@
   <div id="container-parameter" class="container">
     <div class="card-header">Parameter</div>
     <div class="card-body">
-      <div><label for="samples">Samples</label>         <input type="number" id="samples" /></div>
-      <div><label for="firstLayer">First Layer</label>  <input type="number" id="firstLayer" /></div>
-      <div><label for="secondLayer">Second Layer</label><input type="number" id="secondLayer" /></div>
-      <div><label for="epochs">Epochs</label>           <input type="number" id="epochs" /></div>
+      <div><label for="samples" class="unit">Samples</label>         <input type="number" id="samples" class="input-number" /></div>
+      <div><label for="firstLayer" class="unit">First Layer</label>  <input type="number" id="firstLayer" class="input-number" /></div>
+      <div><label for="secondLayer" class="unit">Second Layer</label><input type="number" id="secondLayer" class="input-number" /></div>
+      <div><label for="epochs" class="unit">Epochs</label>           <input type="number" id="epochs" class="input-number" /></div>
     </div>
     <div class="card-footer" id="startTrain">Start Train</div>
   </div>
-  <div id="container-origin" class="container">
+  <div class="container">
     <div class="card-header">Origin Data</div>
+    <div class="card-body" id="container-origin"></div>
   </div>
-  <div id="container-model" class="container">
+  <div class="container">
     <div class="card-header">Model</div>
+    <div class="card-body" id="container-model"></div>
   </div>
-  <div id="container-train" class="container">
+  <div class="container">
     <div class="card-header">Train Metrics</div>
+    <div class="card-body" id="container-origin"></div>
   </div>
-  <div id="container-reconstruct" class="container">
+  <div class="container">
     <div class="card-header">Reconstruct Data</div>
+    <div class="card-body" id="container-reconstruct"></div>
   </div>
-  <div id="container-code" class="container">
+  <div class="container">
     <div class="card-header">Latent Plot</div>
+    <div calss="card-body" id="container-code"></div>
   </div>
 
 </body>
