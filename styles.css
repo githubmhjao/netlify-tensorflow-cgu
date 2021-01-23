@@ -12,6 +12,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-family: Verdana;
   background: linear-gradient(
     237deg,
@@ -28,6 +29,7 @@ body {
   border-radius: 7px;
   background: white;
   height: 80%;
+  min-width: 15%;
 }
 
 .card-header {
