@@ -13,7 +13,7 @@ async function showExamples() {
   const numExamples = 2
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length));
   
-  const series = examples.map((x, i) => `${i}: A/R = {ramanData[x].label}`);
+  const series = examples.map((x, i) => `${i}: A/R = ${ramanData[x].label}`);
   const data = { 
     values: examples.map(x => ramanData[x].profile.map((y, x) => ({x: ramanUnit[x], y: y}))), 
     series 
