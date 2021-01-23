@@ -5,22 +5,15 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-async function showExamples() {
-  // Create a container in the visor
-  const surface = document.getElementById("container-surface");  
+async function showExamples(examples, container) {
 
-  // Get the examples
-  const numExamples = 2
-  const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length));
-  
   const series = examples.map((x, i) => `${i}: A/R = ${ramanData[x].label}`);
   const data = { 
     values: examples.map(x => ramanData[x].profile.map((y, x) => ({x: ramanUnit[x], y: y}))), 
     series 
   }
     
-  tfvis.render.linechart(surface, data);
-    
+  tfvis.render.linechart(container, data);
 }
 
 function getModel() {
@@ -108,8 +101,10 @@ async function trainModel(model, inputs, labels) {
   });
 }
 
-async function run() {  
-  await showExamples();
+async function run() {
+  const numExamples = 2
+  const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length));
+  await showExamples(examples, document.getElementById("container-origin"));
   
   const model = getModel();
   tfvis.show.modelSummary(document.getElementById('container-model'), model);
@@ -124,6 +119,7 @@ async function run() {
   const labels = {train: trainLabel, test: testLabel}
   // Train the model  
   await trainModel(model, inputs, labels);
+  await showExamples(examples, document.getElementById("container-reconstruct"));
 }
 
 document.addEventListener('DOMContentLoaded', run);
