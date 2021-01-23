@@ -107,17 +107,11 @@ function convertToArray(tensor, label, num, dimension) {
 
 
 async function showCodes(codes, container) {
-  console.log(codes)
   const seriesLabel = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-  const series1 = Array(100).fill(0)
-   .map(y => Math.random() * 100 - (Math.random() * 50))
-   .map((y, x) => ({ x, y, }));
 
-  const series2 = Array(100).fill(0)
-   .map(y => Math.random() * 100 - (Math.random() * 150))
-   .map((y, x) => ({ x, y, }));
   const seriesCode = [seriesLabel.map(x => codes.filter(c => c.label == x).map(p => ({x: p.profile[0], y: p.profile[1]})))]
-  const data = { values: seriesCode, seriesLabel }
+  console.log(seriesCode)
+  const data = { values: seriesCode, series: seriesLabel }
 
   tfvis.render.scatterplot(container, data);
 }
