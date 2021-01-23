@@ -12,6 +12,9 @@ async function showExamples(examples, container) {
     values: examples.map(x => x.profile.map((y, i) => ({x: ramanUnit[i], y: y}))), 
     series 
   }
+  
+  const width = Math.floor(document.documentElement.clientWidth * 0.3)
+  const height = Math.floor(document.documentElement.clientHeight * 0.3)
     
   tfvis.render.linechart(container, data, {width: container.getBoundingClientRect().width, height: container.getBoundingClientRect().height});
 }
