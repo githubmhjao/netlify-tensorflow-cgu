@@ -1,2 +1,2 @@
 # netlify-tensorflow-cgu
-Live Demo:
+Live Demo: https://hardcore-archimedes-de3799.netlify.app/
