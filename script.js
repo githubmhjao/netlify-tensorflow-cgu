@@ -1,3 +1,6 @@
+import ramanData from "./data.js"
+import ramanUnit from "./unit.js"
+
 const { useState, useEffect } = React;
 
 function getRandomInt(max) {
