@@ -81,7 +81,7 @@ function convertToTensor(data) {
 
 async function trainModel(model, inputs, labels, epochs) {
   const metrics = ['loss', 'val_loss'];
-  const fitCallbacks = tfvis.show.fitCallbacks(document.getElementById("container-train"), metrics);
+  const fitCallbacks = tfvis.show.fitCallbacks(document.getElementById("container-train"), metrics, {callbacks: ["onEpochEnd"]});
   
   const BATCH_SIZE = 50;
   
