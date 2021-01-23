@@ -15,7 +15,7 @@ async function showExamples() {
   
   const series = examples.map((x, i) => `${i}: A/R = {ramanData[x].label}`);
   const data = { 
-    values: examples.map(x => ramanData[x].profile.map((y, x) => {x: ramanUnit[x], y: y})), 
+    values: examples.map(x => ramanData[x].profile.map((y, x) => ({x: ramanUnit[x], y: y}))), 
     series 
   }
     
