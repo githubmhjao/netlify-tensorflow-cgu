@@ -61,7 +61,7 @@ function getModel() {
     metrics: ['mse'],
   });
 
-  return model;
+  return {model, encoder, decoder};
 }
 
 function convertToTensor(data) {
@@ -101,12 +101,14 @@ async function trainModel(model, inputs, labels) {
   });
 }
 
+
+
 async function run() {
   const numExamples = 2
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
   
-  const model = getModel();
+  const {model, encoder} = getModel();
   tfvis.show.modelSummary(document.getElementById('container-model'), model);
   
   tf.util.shuffle(ramanData);
@@ -119,7 +121,12 @@ async function run() {
   const labels = {train: trainLabel, test: testLabel}
   // Train the model  
   await trainModel(model, inputs, labels);
-  await showExamples(examples, document.getElementById("container-reconstruct"));
+  
+  const [exampleData, exampleLabel] = convertToTensor(examples)
+  const examplePred = model.predict(exampleData)
+  await showExamples(examplePred, document.getElementById("container-reconstruct"));
+  
+  const trainCode = encoder.predict(trainData)
 }
 
 document.addEventListener('DOMContentLoaded', run);
