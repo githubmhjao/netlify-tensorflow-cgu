@@ -112,7 +112,7 @@ async function train(model, data) {
   });
   
   
-  await return model.fit(trainXs, trainXs, {
+  return await model.fit(trainXs, trainXs, {
     batchSize: BATCH_SIZE,
     validationData: [testXs, testXs],
     epochs: 10,
