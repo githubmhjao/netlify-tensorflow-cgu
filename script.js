@@ -148,7 +148,7 @@ async function run() {
   const examplePredArray = convertToArray(examplePredTensor, exampleLabel, numExamples, 256)
   await showExamples(examplePredArray, document.getElementById("container-reconstruct"));
   
-  const trainCode = convertToArray(encoder.predict(trainData), trainLabel, TRAIN_DATA_SIZE, 2)
+  const trainCode = convertToArray(encoder.predict(trainDataTensor), trainLabel, TRAIN_DATA_SIZE, 2)
   
   await showCodes(trainCode, document.getElementById("container-code"))
     
