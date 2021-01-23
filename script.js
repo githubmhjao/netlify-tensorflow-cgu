@@ -117,7 +117,7 @@ async function showCodes(codes, container) {
   const width = Math.floor(document.documentElement.clientWidth * 0.25)
   const height = Math.floor(document.documentElement.clientHeight * 0.25)
   
-  tfvis.render.scatterplot(container, data, {width, height,});
+  tfvis.render.scatterplot(container, data, {width, height, zoomToFit: true});
 }
 
 
