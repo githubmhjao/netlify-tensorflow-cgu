@@ -1,8 +1,6 @@
 import ramanData from "./data.js"
 import ramanUnit from "./unit.js"
 
-const { useState, useEffect } = React;
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -148,56 +146,4 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
     
 }
 
-
-function Parameter(props) {
-  
-  return (
-    <div className="container">
-      <div className="card-header">PARAMETER</div>
-      <div className="card-body" id="container-parameter">
-        <input
-              type="number"
-              onChange={props.handleInputChange}
-              value={props.inputValue}
-              className="input-number"
-              min="5"
-            />
-      </div>
-      <div className="card-footer" onClidk={props.handleTrainOn}>Start Training</div>
-    </div>
-  )
-}
-
-function Card(props) {
-  return (
-    <div className="container">
-      <div className="card-header">{props.title.toUpperCase()}</div>
-      <div className="card-body" id={`container-${props.title}`} />
-    </div>
-  )
-}
-
-
-function App() {
-
-  const [numExamples, setNumExamples] = useState(2)
-  const [numHiddenOne, setNumHiddenOne] = useState(10)
-  const [numHiddenTwo, setNumHiddenTwo] = useState(50)
-  const [epochs, setEpochs] = useState(200)
-  const [trainOn, setTrainOn] = useState(true)
-  
-  const handleInputChange = (e) => {
-    const { value } = e.target
-    setInputValue(value)
-  }
-
-  useEffect(() => {run(numExamples, numHiddenOne, numHiddenTwo, epochs)}, [trainOn])
-
-  const cards = ["origin", "model", "train", "reconstruct", "code"]
-  return (<>
-    <Parameter />
-    {cards.map((card, i) => <Card key={i} title={card}/>)}
-  </>)
-}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+document.addEventListener('DOMContentLoaded', run(2, 50, 10, 10));
