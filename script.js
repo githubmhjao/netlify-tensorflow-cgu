@@ -96,8 +96,8 @@ async function trainModel(model, inputs, labels) {
   
   const BATCH_SIZE = 50;
   
-  trainXs = inputs['train']
-  testXs = inputs['test']  
+  const trainXs = inputs['train']
+  const testXs = inputs['test']  
   
   return await model.fit(trainXs, trainXs, {
     batchSize: BATCH_SIZE,
