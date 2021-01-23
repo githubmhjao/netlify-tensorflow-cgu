@@ -103,6 +103,7 @@ async function trainModel(model, inputs, labels) {
 
 function convertToArray(tensor, label, num) {
   const data = tensor.dataSync()
+  console.log(data)
   return Array(num).fill(0).map((x, i) => ({'profile': data.slice(i * 256, (i + 1) * 256), 'label': label.dataSync()[i]}))
 }
 
@@ -129,6 +130,7 @@ async function run() {
   const examplePred = model.predict(exampleData)
   
   const examplePredArray = convertToArray(examplePred, exampleLabel, numExamples)
+  console.log(examplePredArray)
   await showExamples(examplePredArray, document.getElementById("container-reconstruct"));
   
   const trainCode = encoder.predict(trainData)
