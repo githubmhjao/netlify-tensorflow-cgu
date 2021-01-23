@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TensorFlow.js: AutoEncoder</title>
 
+  <link rel="stylesheet" href="styles.css">
   <!-- Import TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
   <!-- Import tfjs-vis -->
@@ -17,12 +18,24 @@
 </head>
 
 <body>
-  <div id="container-parameter"></div>
-  <div id="container-origin"></div>
-  <div id="container-model"></div>
-  <div id="container-train"></div>
-  <div id="container-reconstruct"></div>
-  <div id="container-code"></div>
+  <div id="container-parameter" class="container">
+    <div class="card-header">Parameter</div>
+  </div>
+  <div id="container-origin" class="container">
+    <div class="card-header">Origin Data</div>
+  </div>
+  <div id="container-model" class="container">
+    <div class="card-header">Model</div>
+  </div>
+  <div id="container-train" class="container">
+    <div class="card-header">Train Metrics</div>
+  </div>
+  <div id="container-reconstruct" class="container">
+    <div class="card-header">Reconstruct Data</div>
+  </div>
+  <div id="container-code" class="container">
+    <div class="card-header">Latent Plot</div>
+  </div>
 
 </body>
 </html>
