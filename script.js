@@ -109,7 +109,7 @@ function convertToArray(tensor, label, num, dimension) {
 async function showCodes(codes, container) {
   const seriesLabel = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
-  const seriesCode = [seriesLabel.map(x => codes.filter(c => c.label == x).map(p => ({x: p.profile[0], y: p.profile[1]})))]
+  const seriesCode = seriesLabel.map(x => codes.filter(c => c.label == x).map(p => ({x: p.profile[0], y: p.profile[1]})))
   console.log(seriesCode)
   const data = { values: seriesCode, series: seriesLabel.map(x => String(x)) }
 
