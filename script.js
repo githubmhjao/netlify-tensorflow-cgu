@@ -1,3 +1,5 @@
+const { useState, useEffect } = React;
+
 import ramanData from './data.js';
 import ramanUnit from './unit.js'
 
@@ -16,21 +18,19 @@ async function showExamples(examples, container) {
   tfvis.render.linechart(container, data);
 }
 
-function getModel() {
+function getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo) {
   const model = tf.sequential();
-  
-  const PROFILE_WIDTH = 256;
   
   const encoder = tf.sequential();
   
   // In the first layer of our convolutional neural network we have 
   // to specify the input shape. Then we specify some parameters for 
   // the convolution operation that takes place in this layer.
-  encoder.add(tf.layers.dense({inputShape: [PROFILE_WIDTH,], units: 50, useBias: true}));
+  encoder.add(tf.layers.dense({inputShape: [PROFILE_WIDTH,], units: numHiddenOne, useBias: true}));
 
   // The MaxPooling layer acts as a sort of downsampling using max values
   // in a region instead of averaging.  
-  encoder.add(tf.layers.dense({units: 10, useBias: true}));
+  encoder.add(tf.layers.dense({units: numHiddenTwo, useBias: true}));
   
   // Our last layer is a dense layer which has 10 output units, one for each
   // output class (i.e. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9).
@@ -43,9 +43,9 @@ function getModel() {
   
   const decoder = tf.sequential();
   
-  decoder.add(tf.layers.dense({inputShape: [NUM_LATENT,], units: 10, useBias: true }))
+  decoder.add(tf.layers.dense({inputShape: [NUM_LATENT,], units: numHiddenTwo, useBias: true }))
   
-  decoder.add(tf.layers.dense({units: 50, useBias: true }))
+  decoder.add(tf.layers.dense({units: numHiddenOne, useBias: true }))
   
   decoder.add(tf.layers.dense({units: PROFILE_WIDTH, useBias: true }))
   
@@ -81,7 +81,7 @@ function convertToTensor(data) {
   });  
 }
 
-async function trainModel(model, inputs, labels) {
+async function trainModel(model, inputs, labels, epochs) {
   const metrics = ['loss', 'val_loss'];
   const fitCallbacks = tfvis.show.fitCallbacks(document.getElementById("container-train"), metrics);
   
@@ -93,7 +93,7 @@ async function trainModel(model, inputs, labels) {
   return await model.fit(trainXs, trainXs, {
     batchSize: BATCH_SIZE,
     validationData: [testXs, testXs],
-    epochs: 10,
+    epochs: epochs,
     shuffle: true,
     callbacks: fitCallbacks
   });
@@ -117,12 +117,12 @@ async function showCodes(codes, container) {
 }
 
 
-async function run() {
-  const numExamples = 2
+async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
+  
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
   
-  const {model, encoder} = getModel();
+  const {model, encoder} = getModel(numHiddenOne, numHiddenTwo);
   tfvis.show.modelSummary(document.getElementById('container-model'), model);
   
   tf.util.shuffle(ramanData);
@@ -134,7 +134,7 @@ async function run() {
   const inputs = {train: trainDataTensor, test: testDataTensor}
   const labels = {train: trainLabelTensor, test: testLabelTensor}
   // Train the model  
-  await trainModel(model, inputs, labels);
+  await trainModel(model, inputs, labels, epochs);
   
   const [exampleData, exampleDataTensor, exampleLabel, exampleLabelTensor] = convertToTensor(examples)
   const examplePredTensor = model.predict(exampleDataTensor)
@@ -148,4 +148,56 @@ async function run() {
     
 }
 
-document.addEventListener('DOMContentLoaded', run);
+
+function Parameter(props) {
+  
+  return (
+    <div className="container">
+      <div className="card-header">PARAMETER</div>
+      <div className="card-body" id="container-parameter">
+        <input
+              type="number"
+              onChange={props.handleInputChange}
+              value={props.inputValue}
+              className="input-number"
+              min="5"
+            />
+      </div>
+      <div className="card-footer" onClidk={props.handleTrainOn}>Start Training</div>
+    </div>
+  )
+}
+
+function Card(props) {
+  return (
+    <div className="container">
+      <div className="card-header">{props.title.toUpperCase()}</div>
+      <div className="card-body" id={`container-${props.title}`} />
+    </div>
+  )
+}
+
+
+function App() {
+
+  const [numExamples, setNumExamples] = useState(2)
+  const [numHiddenOne, setNumHiddenOne] = useState(10)
+  const [numHiddenTwo, setNumHiddenTwo] = useState(50)
+  const [epochs, setEpochs] = useState(200)
+  const [trainOn, setTrainOn] = useState(true)
+  
+  const handleInputChange = (e) => {
+    const { value } = e.target
+    setInputValue(value)
+  }
+
+  useEffect(() => {run(numExamples, numHiddenOne, numHiddenTwo, epochs)}, [trainOn])
+
+  const cards = ["origin", "model", "train", "reconstruct", "code"]
+  return (<>
+    <Parameter />
+    {cards.map((card, i) => <Card key={i} title={card}/>)}
+  </>)
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
