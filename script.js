@@ -13,8 +13,8 @@ async function showExamples(examples, container) {
     series 
   }
   
-  const width = Math.floor(document.documentElement.clientWidth * 0.3)
-  const height = Math.floor(document.documentElement.clientHeight * 0.3)
+  const width = Math.floor(document.documentElement.clientWidth * 0.25)
+  const height = Math.floor(document.documentElement.clientHeight * 0.25)
     
   tfvis.render.linechart(container, data, {width: container.getBoundingClientRect().width, height: container.getBoundingClientRect().height});
 }
@@ -114,7 +114,10 @@ async function showCodes(codes, container) {
   console.log(seriesCode)
   const data = { values: seriesCode, series: seriesLabel.map(x => String(x)) }
 
-  tfvis.render.scatterplot(container, data);
+  const width = Math.floor(document.documentElement.clientWidth * 0.25)
+  const height = Math.floor(document.documentElement.clientHeight * 0.25)
+  
+  tfvis.render.scatterplot(container, data, {width, height,});
 }
 
 
