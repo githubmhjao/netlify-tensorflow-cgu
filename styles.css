@@ -62,7 +62,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 45px;
+  margin-bottom: 30px;
 }
 
 .unit {
@@ -110,7 +110,7 @@ body {
 
 .input-number {
   font-size: 32px;
-  max-width: 170px;
+  max-width: 50px;
   flex: 1;
   display: inline-block;
   background: transparent;
