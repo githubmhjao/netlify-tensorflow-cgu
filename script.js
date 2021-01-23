@@ -102,7 +102,7 @@ async function trainModel(model, inputs, labels) {
 }
 
 function convertToArray(tensor, label, num) {
-  const data = tensor.dataSync()
+  const data = Array.from(tensor.dataSync())
   console.log(data)
   return Array(num).fill(0).map((x, i) => ({'profile': data.slice(i * 256, (i + 1) * 256), 'label': label.dataSync()[i]}))
 }
