@@ -29,7 +29,7 @@ body {
   border-radius: 7px;
   background: white;
   height: 80%;
-  min-width: 15%;
+  width: 15%;
 }
 
 .card-header {
