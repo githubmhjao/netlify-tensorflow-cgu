@@ -13,7 +13,7 @@ async function showExamples(examples, container) {
     series 
   }
     
-  tfvis.render.linechart(container, data);
+  tfvis.render.linechart(container, data, {width: container.getBoundingClientRect().width, height: container.getBoundingClientRect().height});
 }
 
 function getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo) {
