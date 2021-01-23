@@ -1,8 +1,5 @@
 const { useState, useEffect } = React;
 
-import ramanData from './data.js';
-import ramanUnit from './unit.js'
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
