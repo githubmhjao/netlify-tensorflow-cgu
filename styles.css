@@ -55,7 +55,7 @@ body {
 
 .card-body {
   flex: 1;
-  padding: 30px;
+  padding: 20px;
 }
 
 .unit-control {
@@ -109,7 +109,7 @@ body {
 
 .input-number {
   font-size: 32px;
-  max-width: 50px;
+  max-width: 100px;
   flex: 1;
   display: inline-block;
   background: transparent;
