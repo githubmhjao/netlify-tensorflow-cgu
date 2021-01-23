@@ -127,7 +127,7 @@ async function run() {
   const model = getModel();
   tfvis.show.modelSummary(document.getElementById('container-model'), model);
   
-  train(model, ramanData)
+  await train(model, ramanData)
 }
 
 document.addEventListener('DOMContentLoaded', run);
