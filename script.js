@@ -123,7 +123,8 @@ async function run() {
   await trainModel(model, inputs, labels);
   
   const [exampleData, exampleLabel] = convertToTensor(examples)
-  const examplePred = model.predict(exampleData)
+  const examplePred = model.predict(exampleData).dataSync()
+  console.log(examplePred)
   await showExamples(examplePred, document.getElementById("container-reconstruct"));
   
   const trainCode = encoder.predict(trainData)
