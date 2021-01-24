@@ -128,6 +128,7 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const PROFILE_WIDTH = 256
   const {model, encoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
+  document.getElementById("container-model").innerHTML = ""
   tfvis.show.modelSummary(document.getElementById('container-model'), model);
   
   tf.util.shuffle(ramanData);
@@ -138,7 +139,8 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const inputs = {train: trainDataTensor, test: testDataTensor}
   const labels = {train: trainLabelTensor, test: testLabelTensor}
-  // Train the model  
+  // Train the model
+  document.getElementById("container-train").innerHTML = ""
   await trainModel(model, inputs, labels, epochs);
   
   const [exampleData, exampleDataTensor, exampleLabel, exampleLabelTensor] = convertToTensor(examples)
