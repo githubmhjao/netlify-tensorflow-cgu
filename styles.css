@@ -45,6 +45,8 @@ body {
   background: white;
   height: 95%;
   width: 30%;
+  min-height: 340px;
+  min-width: 300px;
 }
 
 .card-header {
