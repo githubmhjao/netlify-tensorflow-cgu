@@ -102,7 +102,7 @@ async function trainModel(model, inputs, labels, epochs) {
 
 function convertToArray(tensor, label, num, dimension) {
   const data = Array.from(tensor.dataSync())
-  console.log(data)
+  // console.log(data)
   return Array(num).fill(0).map((x, i) => ({'profile': data.slice(i * dimension, (i + 1) * dimension), 'label': label[i]}))
 }
 
@@ -158,7 +158,16 @@ let valueFL = 50
 let valueSL = 10
 let valueEP = 10
 
-document.addEventListener('DOMContentLoaded', run(valueSA, valueFL, valueSL, valueEP));
+function init(valueSA, valueFL, valueSL, valueEP) {
+  document.getElementById("samples").value = valueSA
+  document.getElementById("firstLayer").value = valueFL
+  document.getElementById("secondLayer").value = valueSL
+  document.getElementById("epochs").value = valueEP
+  
+  run(valueSA, valueFL, valueSL, valueEP)
+}
+
+document.addEventListener('DOMContentLoaded', init(valueSA, valueFL, valueSL, valueEP));
 
 document.getElementById("samples").onchange = function (evt) {
     valueSA = Number(evt.target.value)
