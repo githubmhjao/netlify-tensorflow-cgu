@@ -177,5 +177,10 @@ document.getElementById("epochs").onchange = function (evt) {
 }
 
 document.getElementById("startTrain").onclick = function () {
-  run (valueSA, valueFL, valueSL, valueEP)  
+  document.getElementById("container-origin").innerHTML = ""
+  document.getElementById("container-model").innerHTML = ""
+  document.getElementById("container-train").innerHTML = ""
+  document.getElementById("container-reconstruct").innerHTML = ""
+  document.getElementById("container-code").innerHTML = ""
+  run(valueSA, valueFL, valueSL, valueEP)  
 }
