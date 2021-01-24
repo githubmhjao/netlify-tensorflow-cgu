@@ -177,10 +177,10 @@ document.getElementById("epochs").onchange = function (evt) {
 }
 
 document.getElementById("startTrain").onclick = function () {
-  document.getElementById("container-origin").innerHTML = ""
-  document.getElementById("container-model").innerHTML = ""
-  document.getElementById("container-train").innerHTML = ""
-  document.getElementById("container-reconstruct").innerHTML = ""
-  document.getElementById("container-code").innerHTML = ""
+  document.getElementById("container-origin").innerHTML = "<div class='converter-title'>Loading...</div>"
+  document.getElementById("container-model").innerHTML = "<div class='converter-title'>Loading...</div>"
+  document.getElementById("container-train").innerHTML = "<div class='converter-title'>Loading...</div>"
+  document.getElementById("container-reconstruct").innerHTML = "<div class='converter-title'>Loading...</div>"
+  document.getElementById("container-code").innerHTML = "<div class='converter-title'>Loading...</div>"
   run(valueSA, valueFL, valueSL, valueEP)  
 }
