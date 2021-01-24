@@ -23,6 +23,12 @@ body {
   );
 }
 
+.header {
+  color: white;
+  height: 10%;
+  width: 90%;
+}
+
 .half {
   display: flex;
   align-items: center;
@@ -37,7 +43,7 @@ body {
   box-shadow: 1px 1px 10px 1px #333;
   border-radius: 7px;
   background: white;
-  height: 90%;
+  height: 95%;
   width: 30%;
 }
 
@@ -70,7 +76,7 @@ body {
   align-items: center;
   justify-content: center;
   width: 150px;
-  height: 35px;
+  height: 30px;
   color: white;
   border-radius: 3px;
 }
@@ -107,8 +113,12 @@ body {
   color: white;
 }
 
+.card-footer:hover {
+  background-color: #13d569;
+}
+
 .input-number {
-  font-size: 32px;
+  font-size: 28px;
   max-width: 100px;
   flex: 1;
   display: inline-block;
