@@ -22,7 +22,7 @@ async function showExamples(examples, container) {
 function getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo) {
   const model = tf.sequential();
   
-  const encoder = tf.sequential();
+  const encoder = tf.sequential({name: "Encoder"});
   
   // In the first layer of our convolutional neural network we have 
   // to specify the input shape. Then we specify some parameters for 
@@ -42,7 +42,7 @@ function getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo) {
     activation: 'sigmoid'
   }));
   
-  const decoder = tf.sequential();
+  const decoder = tf.sequential({name: "Decoder"});
   
   decoder.add(tf.layers.dense({inputShape: [NUM_LATENT,], units: numHiddenTwo, useBias: true }))
   
