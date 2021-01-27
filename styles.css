@@ -64,6 +64,9 @@ body {
 .card-body {
   flex: 1;
   padding: 20px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .unit-control {
