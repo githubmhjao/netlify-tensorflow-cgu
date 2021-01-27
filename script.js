@@ -128,7 +128,7 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const PROFILE_WIDTH = 256
   const {model, encoder, decoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
-  document.getElementById("container-model").innerHTML = '<div id="container-encoder"></div><div id="container-dncoder"></div>'
+  document.getElementById("container-model").innerHTML = '<div id="container-encoder"></div><div id="container-decoder"></div>'
   tfvis.show.modelSummary(document.getElementById('container-encoder'), encoder);
   tfvis.show.modelSummary(document.getElementById('container-decoder'), decoder);
   
