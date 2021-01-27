@@ -127,9 +127,10 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   await showExamples(examples, document.getElementById("container-origin"));
   
   const PROFILE_WIDTH = 256
-  const {model, encoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
+  const {model, encoder, decoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
   document.getElementById("container-model").innerHTML = ""
-  tfvis.show.modelSummary(document.getElementById('container-model'), model);
+  tfvis.show.modelSummary(document.getElementById('container-encoder'), encoder);
+  tfvis.show.modelSummary(document.getElementById('container-decoder'), decoder);
   
   tf.util.shuffle(ramanData);
   
