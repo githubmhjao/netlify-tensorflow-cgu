@@ -153,6 +153,8 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   const trainCode = convertToArray(encoder.predict(trainDataTensor), trainLabel, TRAIN_DATA_SIZE, 2)
   
   await showCodes(trainCode, document.getElementById("container-code"))
+  
+  console.log(process.env.NOTIFY_ACCESS_TOEKN)
     
 }
 
