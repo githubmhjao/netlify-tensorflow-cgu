@@ -1,8 +1,6 @@
 import ramanData from "./data.js"
 import ramanUnit from "./unit.js"
 
-const netlifyAccessToken = process.env.NOTIFY_ACCESS_TOEKN
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -156,8 +154,6 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   await showCodes(trainCode, document.getElementById("container-code"))
   
-  console.log(netlifyAccessToken)
-    
 }
 
 let valueSA = 2
