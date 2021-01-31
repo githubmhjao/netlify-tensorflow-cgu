@@ -1,8 +1,4 @@
-import React from "react"
-import {useState, useEffect} from "react"
-
-import "./styles.css"
-import loadRamanData from "./data.js"
+import ramanData from "./data.js"
 import ramanUnit from "./unit.js"
 
 function getRandomInt(max) {
@@ -110,12 +106,11 @@ function convertToArray(tensor, label, num, dimension) {
   return Array(num).fill(0).map((x, i) => ({'profile': data.slice(i * dimension, (i + 1) * dimension), 'label': label[i]}))
 }
 
-
 async function showCodes(codes, container) {
   const seriesLabel = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
   const seriesCode = seriesLabel.map(x => codes.filter(c => c.label == x).map(p => ({x: p.profile[0], y: p.profile[1]})))
-  console.log(seriesCode)
+  // console.log(seriesCode)
   const data = { values: seriesCode, series: seriesLabel.map(x => String(x)) }
 
   const width = Math.floor(document.documentElement.clientWidth * 0.25)
@@ -124,15 +119,23 @@ async function showCodes(codes, container) {
   tfvis.render.scatterplot(container, data, {width, height, zoomToFit: true});
 }
 
+let valueSA = 2
+let valueFL = 50
+let valueSL = 10
+let valueEP = 10
+
+document.getElementById("samples").onchange = (e) => { valueSA = Numver(e.target.value) }
+document.getElementById("firstLayer").onchange = (e) => { valueFL = Numver(e.target.value) }
+document.getElementById("secondLayer").onchange = (e) => { valueSL = Numver(e.target.value) }
+document.getElementById("epochs").onchange = (e) => { valueEP = Numver(e.target.value) }
 
 async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
-  const NUM_DATASET_ELEMENTS = 1100
-  const IMAGE_SIZE = 257
   
-  const datasetImages = loadRamanData()
-  const ramanData = Array(NUM_DATASET_ELEMENTS)
-    .fill(0)
-    .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256)/10 }))
+  document.getElementById("container-origin").innerHTML = '<div className="converter-title">Loading...</div>'
+  document.getElementById("container-model").innerHTML = '<div className="converter-title">Loading...</div>'
+  document.getElementById("container-train").innerHTML = '<div className="converter-title">Loading...</div>'
+  document.getElementById("container-reconstruct").innerHTML = '<div className="converter-title">Loading...</div>'
+  document.getElementById("container-latent").innerHTML = '<div className="converter-title">Loading...</div>'
   
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
@@ -167,74 +170,13 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
 }
 
-function ParameterReadOnly({id, value}) {
-  return (
-    <div className="unit-control">
-        <label for={id} className="unit">{id[0] + id.slice(1)}</label>     
-        <input type="text" id={id} className="input-number" value={value} readonly />
-    </div>
-  )
-}
-
-function Parameter({id, value, setValue}) {
-  return (
-    <div className="unit-control">
-        <label for={id} className="unit">{id[0] + id.slice(1)}</label>         
-        <input type="number" id={id} className="input-number" value={value} onChange={(e) => {setValue(e.target.value)}} />
-    </div>
-  )
-}
-
-function Parameters({values, setValues}) {
+function init() {
+  document.getElementById("samples").value = valueSA
+  document.getElementById("firstLayer").value = valueFL
+  document.getElementById("secondLayer").value = valueSL
+  document.getElementById("epochs").value = valueEP
   
-  return (
-    <div id="container-parameter" className="container">
-      <div className="card-header">Parameter</div>
-      <div className="card-body">
-        <Parameter id="samples" value={values.valueSA} setValue={setValues.setValueSA} />
-        <ParameterReadOnly id="dimension" value="256" />
-        <Parameter id="firstLayer" value={values.valueFL} setValue={setValues.setValueFL} />
-        <Parameter id="secondLayer" value={values.valueSL} setValue={setValues.setValueSL} />
-        <ParameterReadOnly id="latent" value="2" />
-        <Parameter id="epochs" value={values.valueEP} setValue={setValues.setValueEP} />
-      </div>
-      <div className="card-footer" id="startTrain" onClick={() => run(values.valueSA, values.valueFL, values.valueSL, values.valueEP)} >Start Train</div>
-    </div>
-  )
+  run(valueSA, valueFL, valueSL, valueEP)
 }
 
-function Card({header, id}) {
-  return (
-    <div className="container">
-      <div className="card-header">{header}</div>
-      <div className="card-body" id={id}>
-        <div className="converter-title">Loading...</div>
-      </div>
-    </div>
-  )
-}
-
-export default function APP() {
-  const [valueSA, setValueSA] = useState(2)
-  const [valueFL, setValueFL] = useState(50)
-  const [valueSL, setValueSL] = useState(10)
-  const [valueEP, setValueEP] = useState(10)
-  
-  const values = {valueSA, valueFL, valueSL, valueEP}
-  const setValues = {setValueSA, setValueFL, setValueSL, setValueEP}
-  
-  return (
-    <>
-      <div className="header"><h1>Raman Spectrum Analyzed by Neural Network AutoEncoder</h1></div>
-      <div className="half">
-        <Parameters values={values} setValues={setValues} />
-        <Card header="Origin Data" id="container-origin" />
-        <Card header="Model" id="container-model" />
-      </div>
-      <div className="half">
-        <Card header="Train Metrics" id="container-train" />
-        <Card header="Reconstruct Data" id="container-reconstruct" />
-        <Card header="Latent Plot" id="container-latent" />
-      </div>
-    </>)
-}
+document.addEventListener('DOMContentLoaded', init);
