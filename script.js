@@ -124,10 +124,10 @@ let valueFL = 50
 let valueSL = 10
 let valueEP = 10
 
-document.getElementById("samples").onchange = (e) => { valueSA = Numver(e.target.value) }
-document.getElementById("firstLayer").onchange = (e) => { valueFL = Numver(e.target.value) }
-document.getElementById("secondLayer").onchange = (e) => { valueSL = Numver(e.target.value) }
-document.getElementById("epochs").onchange = (e) => { valueEP = Numver(e.target.value) }
+document.getElementById("samples").onchange = (e) => { valueSA = Number(e.target.value) }
+document.getElementById("firstLayer").onchange = (e) => { valueFL = Number(e.target.value) }
+document.getElementById("secondLayer").onchange = (e) => { valueSL = Number(e.target.value) }
+document.getElementById("epochs").onchange = (e) => { valueEP = Number(e.target.value) }
 
 async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
