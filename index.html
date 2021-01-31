@@ -18,69 +18,59 @@
 </head>
 
 <body>
-  <div className="header"><h1>Raman Spectrum Analyzed by Neural Network AutoEncoder</h1></div>
-  <div className="half">
-    <div id="container-parameter" className="container">
-      <div className="card-header">Parameter</div>
-      <div className="card-body">
-        <div className="unit-control">
-          <label for="samples" className="unit">Samples</label>         
-          <input type="number" id="samples" className="input-number" value="2" />
+  <div class="header"><h1>Raman Spectrum Analyzed by Neural Network AutoEncoder</h1></div>
+  <div class="half">
+    <div id="container-parameter" class="container">
+      <div class="card-header">Parameter</div>
+      <div class="card-body">
+        <div class="unit-control">
+          <label for="samples" class="unit">Samples</label>         
+          <input type="number" id="samples" class="input-number" value="2" />
         </div>
-        <div className="unit-control">
-          <label for="dimension" className="unit">Dimension</label>     
-          <input type="text" id="dimension" className="input-number" value="256" readonly />
+        <div class="unit-control">
+          <label for="dimension" class="unit">Dimension</label>     
+          <input type="text" id="dimension" class="input-number" value="256" readonly />
         </div>
-        <div className="unit-control">
-          <label for="firstLayer" className="unit">First Layer</label>         
-          <input type="number" id="firstLayer" className="input-number" value="50" />
+        <div class="unit-control">
+          <label for="firstLayer" class="unit">First Layer</label>         
+          <input type="number" id="firstLayer" class="input-number" value="50" />
         </div>
-        <div className="unit-control">
-          <label for="secondLayer" className="unit">Second Layer</label>         
-          <input type="number" id="secondLayer" className="input-number" value="10" />
+        <div class="unit-control">
+          <label for="secondLayer" class="unit">Second Layer</label>         
+          <input type="number" id="secondLayer" class="input-number" value="10" />
         </div>
-        <div className="unit-control">
-          <label for="latent" className="unit">Latent</label>     
-          <input type="text" id="latent" className="input-number" value="2" readonly />
+        <div class="unit-control">
+          <label for="latent" class="unit">Latent</label>     
+          <input type="text" id="latent" class="input-number" value="2" readonly />
         </div>
-        <div className="unit-control">
-          <label for="epochs" className="unit">Epochs</label>         
-          <input type="number" id="epochs" className="input-number" value="10" />
+        <div class="unit-control">
+          <label for="epochs" class="unit">Epochs</label>         
+          <input type="number" id="epochs" class="input-number" value="10" />
         </div>
       </div>
-      <div className="card-footer" id="startTrain" >Start Train</div>
+      <div class="card-footer" id="startTrain" >Start Train</div>
     </div>
-    <div className="container">
-      <div className="card-header">Origin Data</div>
-      <div className="card-body" id="container-origin">
-        <div className="converter-title">Loading...</div>
-      </div>
+    <div class="container">
+      <div class="card-header">Origin Data</div>
+      <div class="card-body" id="container-origin"></div>
     </div>
-    <div className="container">
-      <div className="card-header">Model</div>
-      <div className="card-body" id="container-model">
-        <div className="converter-title">Loading...</div>
-      </div>
+    <div class="container">
+      <div class="card-header">Model</div>
+      <div class="card-body" id="container-model"></div>
     </div>
   </div>
-  <div className="half">
-    <div className="container">
-      <div className="card-header">Train Metrics</div>
-      <div className="card-body" id="container-train">
-        <div className="converter-title">Loading...</div>
-      </div>
+  <div class="half">
+    <div class="container">
+      <div class="card-header">Train Metrics</div>
+      <div class="card-body" id="container-train"></div>
     </div>
-    <div className="container">
-      <div className="card-header">Reconstruct Data</div>
-      <div className="card-body" id="container-reconstruct">
-        <div className="converter-title">Loading...</div>
-      </div>
+    <div class="container">
+      <div class="card-header">Reconstruct Data</div>
+      <div class="card-body" id="container-reconstruct"></div>
     </div>
-    <div className="container">
-      <div className="card-header">Latent Plot</div>
-      <div className="card-body" id="container-latent">
-        <div className="converter-title">Loading...</div>
-      </div>
+    <div class="container">
+      <div class="card-header">Latent Plot</div>
+      <div class="card-body" id="container-latent"></div>
     </div>
   </div>
 </body>
