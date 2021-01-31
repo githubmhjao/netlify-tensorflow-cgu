@@ -132,7 +132,7 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   const datasetImages = await loadRamanData()
   const ramanData = Array(NUM_DATASET_ELEMENTS)
     .fill(0)
-    .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256) }))
+    .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256)/10 }))
   
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
