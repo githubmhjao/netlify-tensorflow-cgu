@@ -129,7 +129,7 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   const NUM_DATASET_ELEMENTS = 1100
   const IMAGE_SIZE = 257
   
-  const datasetImages = await loadRamanData()
+  const datasetImages = loadRamanData()
   const ramanData = Array(NUM_DATASET_ELEMENTS)
     .fill(0)
     .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256)/10 }))
