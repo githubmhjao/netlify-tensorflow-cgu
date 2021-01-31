@@ -1,52 +1,54 @@
 const RAMAN_IMAGE_PATH = "https://i.imgur.com/tPsSRrS.png"
 const IMAGE_SIZE = 257
 const NUM_DATASET_ELEMENTS = 1100
-let datasetImages
 
-const img = new Image()
-const canvas = document.createElement('canvas')
-const ctx = canvas.getContext('2d')
+explore default class ramanData {
 
-const imgRequest = new Promise((resolve, reject) => {
-  img.crossOrigin = '';
-  img.onload = () => {
-    img.width = img.naturalWidth;
-    img.height = img.naturalHeight;
+  async load() {
+    const img = new Image()
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
 
-    const datasetBytesBuffer =
-        new ArrayBuffer(NUM_DATASET_ELEMENTS * IMAGE_SIZE * 4);
+    const imgRequest = new Promise((resolve, reject) => {
+      img.crossOrigin = '';
+      img.onload = () => {
+        img.width = img.naturalWidth;
+        img.height = img.naturalHeight;
 
-    const chunkSize = 100;
-    canvas.width = img.width;
-    canvas.height = chunkSize;
+        const datasetBytesBuffer =
+            new ArrayBuffer(NUM_DATASET_ELEMENTS * IMAGE_SIZE * 4);
 
-    for (let i = 0; i < NUM_DATASET_ELEMENTS / chunkSize; i++) {
-      const datasetBytesView = new Float32Array(
-          datasetBytesBuffer, i * IMAGE_SIZE * chunkSize * 4,
-          IMAGE_SIZE * chunkSize);
-      ctx.drawImage(
-          img, 0, i * chunkSize, img.width, chunkSize, 0, 0, img.width,
-          chunkSize);
+        const chunkSize = 100;
+        canvas.width = img.width;
+        canvas.height = chunkSize;
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < NUM_DATASET_ELEMENTS / chunkSize; i++) {
+          const datasetBytesView = new Float32Array(
+              datasetBytesBuffer, i * IMAGE_SIZE * chunkSize * 4,
+              IMAGE_SIZE * chunkSize);
+          ctx.drawImage(
+              img, 0, i * chunkSize, img.width, chunkSize, 0, 0, img.width,
+              chunkSize);
 
-      for (let j = 0; j < imageData.data.length / 4; j++) {
-        // All channels hold an equal value since the image is grayscale, so
-        // just read the red channel.
-        datasetBytesView[j] = imageData.data[j * 4] / 255;
-      }
-    }
-    datasetImages = new Float32Array(datasetBytesBuffer);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    resolve();
-  };
-  img.src = RAMAN_IMAGE_PATH;
-});
+          for (let j = 0; j < imageData.data.length / 4; j++) {
+            // All channels hold an equal value since the image is grayscale, so
+            // just read the red channel.
+            datasetBytesView[j] = imageData.data[j * 4] / 255;
+          }
+        }
+        this.datasetImages = new Float32Array(datasetBytesBuffer);
 
-const imgResponse = await Promise.all([imgRequest])
+        resolve();
+      };
+      img.src = RAMAN_IMAGE_PATH;
+    });
 
-const ramanData = Array(NUM_DATASET_ELEMENTS)
-  .fill(0)
-  .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256) }))
-  
-export default ramanData
+    const imgResponse = await Promise.all([imgRequest])
+
+    this.data = Array(NUM_DATASET_ELEMENTS)
+      .fill(0)
+      .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256) }))
+  }
+}
