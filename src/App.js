@@ -2,7 +2,7 @@ import React from "react"
 import {useState, useEffect} from "react"
 
 import "./styles.css"
-import ramanData from "./data.js"
+import loadRamanData from "./data.js"
 import ramanUnit from "./unit.js"
 
 function getRandomInt(max) {
@@ -126,6 +126,13 @@ async function showCodes(codes, container) {
 
 
 async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
+  const NUM_DATASET_ELEMENTS = 1100
+  const IMAGE_SIZE = 257
+  
+  const datasetImages = await loadRamanData()
+  const ramanData = Array(NUM_DATASET_ELEMENTS)
+    .fill(0)
+    .map((x, i) => ({'profile': datasetImages.slice(i * IMAGE_SIZE + 1, (i + 1) * IMAGE_SIZE), 'label': Math.round(datasetImages[i * IMAGE_SIZE] * 256) }))
   
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
