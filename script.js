@@ -131,12 +131,6 @@ document.getElementById("epochs").onchange = (e) => { valueEP = Numver(e.target.
 
 async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
-  document.getElementById("container-origin").innerHTML = '<div className="converter-title">Loading...</div>'
-  document.getElementById("container-model").innerHTML = '<div className="converter-title">Loading...</div>'
-  document.getElementById("container-train").innerHTML = '<div className="converter-title">Loading...</div>'
-  document.getElementById("container-reconstruct").innerHTML = '<div className="converter-title">Loading...</div>'
-  document.getElementById("container-latent").innerHTML = '<div className="converter-title">Loading...</div>'
-  
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
   await showExamples(examples, document.getElementById("container-origin"));
   
@@ -175,6 +169,17 @@ function init() {
   document.getElementById("firstLayer").value = valueFL
   document.getElementById("secondLayer").value = valueSL
   document.getElementById("epochs").value = valueEP
+  
+  run(valueSA, valueFL, valueSL, valueEP)
+}
+
+document.getElementById("startTrain").onclick = () => {
+
+  document.getElementById("container-origin").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("container-model").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("container-train").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("container-reconstruct").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("container-latent").innerHTML = '<div class="converter-title">Loading...</div>'
   
   run(valueSA, valueFL, valueSL, valueEP)
 }
