@@ -167,7 +167,7 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
 }
 
-function ParameterReadOnly(id, value) {
+function ParameterReadOnly({id, value}) {
   return (
     <div className="unit-control">
         <label for={id} className="unit">{id[0] + id.slice(1)}</label>     
@@ -176,7 +176,7 @@ function ParameterReadOnly(id, value) {
   )
 }
 
-function Parameter(id, value, setValue) {
+function Parameter({id, value, setValue}) {
   return (
     <div className="unit-control">
         <label for={id} className="unit">{id[0] + id.slice(1)}</label>         
@@ -203,7 +203,7 @@ function Parameters({values, setValues}) {
   )
 }
 
-function Card(header, id) {
+function Card({header, id}) {
   return (
     <div className="container">
       <div className="card-header">{header}</div>
