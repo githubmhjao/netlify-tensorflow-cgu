@@ -1,3 +1,7 @@
+import React from "react"
+import {useState, useEffect} from "react"
+
+import "./styles.css"
 import ramanData from "./data.js"
 import ramanUnit from "./unit.js"
 
@@ -152,47 +156,78 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const trainCode = convertToArray(encoder.predict(trainDataTensor), trainLabel, TRAIN_DATA_SIZE, 2)
   
-  await showCodes(trainCode, document.getElementById("container-code"))
+  await showCodes(trainCode, document.getElementById("container-latent"))
   
 }
 
-let valueSA = 2
-let valueFL = 50
-let valueSL = 10
-let valueEP = 10
+function ParameterReadOnly(id, value) {
+  return (
+    <div className="unit-control">
+        <label for={id} className="unit">{id[0] + id.slice(1)}</label>     
+        <input type="text" id={id} className="input-number" value={value} readonly />
+    </div>
+  )
+}
 
-function init(valueSA, valueFL, valueSL, valueEP) {
-  document.getElementById("samples").value = valueSA
-  document.getElementById("firstLayer").value = valueFL
-  document.getElementById("secondLayer").value = valueSL
-  document.getElementById("epochs").value = valueEP
+function Parameter(id, value, setValue) {
+  return (
+    <div className="unit-control">
+        <label for={id} className="unit">{id[0] + id.slice(1)}</label>         
+        <input type="number" id={id} className="input-number" value={value} onChange={(e) => {setValue(e.target.value)}} />
+    </div>
+  )
+}
+
+function Parameters({values, setValues}) {
   
-  run(valueSA, valueFL, valueSL, valueEP)
+  return (
+    <div id="container-parameter" className="container">
+      <div className="card-header">Parameter</div>
+      <div className="card-body">
+        <Parameter id="samples" value={values.valueSA} setValue={setValues.setValueSA} />
+        <ParameterReadOnly id="dimension" value="256" />
+        <Parameter id="firstLayer" value={values.valueFL} setValue={setValues.setValueFL} />
+        <Parameter id="secondLayer" value={values.valueSL} setValue={setValues.setValueSL} />
+        <ParameterReadOnly id="latent" value="2" />
+        <Parameter id="epochs" value={values.valueEP} setValue={setValues.setValueEP} />
+      </div>
+      <div className="card-footer" id="startTrain" onClick={() => run(values.valueSA, values.valueFL, values.valueSL, values.valueEP)} >Start Train</div>
+    </div>
+  )
 }
 
-document.addEventListener('DOMContentLoaded', init(valueSA, valueFL, valueSL, valueEP));
-
-document.getElementById("samples").onchange = function (evt) {
-    valueSA = Number(evt.target.value)
+function Card(header, id) {
+  return (
+    <div className="container">
+      <div className="card-header">{header}</div>
+      <div className="card-body" id={id}>
+        <div className="converter-title">Loading...</div>
+      </div>
+    </div>
+  )
 }
 
-document.getElementById("firstLayer").onchange = function (evt) {
-    valueFL = Number(evt.target.value)
-}
-
-document.getElementById("secondLayer").onchange = function (evt) {
-    valueSL = Number(evt.target.value)
-}
-
-document.getElementById("epochs").onchange = function (evt) {
-    valueEP = Number(evt.target.value)
-}
-
-document.getElementById("startTrain").onclick = function () {
-  document.getElementById("container-origin").innerHTML = "<div class='converter-title'>Loading...</div>"
-  document.getElementById("container-model").innerHTML = "<div class='converter-title'>Loading...</div>"
-  document.getElementById("container-train").innerHTML = "<div class='converter-title'>Loading...</div>"
-  document.getElementById("container-reconstruct").innerHTML = "<div class='converter-title'>Loading...</div>"
-  document.getElementById("container-code").innerHTML = "<div class='converter-title'>Loading...</div>"
-  run(valueSA, valueFL, valueSL, valueEP)  
+export default function APP() {
+  const [valueSA, setValueSA] = useState(2)
+  const [valueFL, setValueFL] = useState(50)
+  const [valueSL, setValueSL] = useState(10)
+  const [valueEP, setValueEP] = useState(10)
+  
+  const values = {valueSA, valueFL, valueSL, valueEP}
+  const setValues = {setValueSA, setValueFL, setValueSL, setValueEP}
+  
+  return (
+    <>
+      <div className="header"><h1>Raman Spectrum Analyzed by Neural Network AutoEncoder</h1></div>
+      <div className="half">
+        <Parameters values={values} setValues={setValues} />
+        <Card header="Origin Data" id="container-origin" />
+        <Card header="Model" id="container-model" />
+      </div>
+      <div className="half">
+        <Card header="Train Metrics" id="container-train" />
+        <Card header="Reconstruct Data" id="container-reconstruct" />
+        <Card header="Latent Plot" id="container-latent" />
+      </div>
+    </>)
 }
