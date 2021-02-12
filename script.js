@@ -16,7 +16,7 @@ async function showExamples(examples, container) {
   const width = Math.floor(document.documentElement.clientWidth * 0.25)
   const height = Math.floor(document.documentElement.clientHeight * 0.25)
     
-  tfvis.render.linechart(container, data, {width: width, height: height});
+  tfvis.render.linechart(container, data);
 }
 
 function getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo) {
