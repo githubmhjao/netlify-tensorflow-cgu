@@ -136,7 +136,7 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const PROFILE_WIDTH = 256
   const {model, encoder, decoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
-  document.getElementById("card-model").innerHTML = '<div id="container-encoder"></div><div id="container-decoder"></div>'
+  document.getElementById("card-model").innerHTML = '<div id="card-encoder"></div><div id="card-decoder"></div>'
   tfvis.show.modelSummary(document.getElementById('card-encoder'), encoder);
   tfvis.show.modelSummary(document.getElementById('card-decoder'), decoder);
   
@@ -175,11 +175,11 @@ function init() {
 
 document.getElementById("startTrain").onclick = () => {
 
-  document.getElementById("card-origin").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("card-model").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("card-train").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("card-reconstruct").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("card-latent").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("card-origin").innerHTML = '<h5 class="card-title">Loading...</h5>'
+  document.getElementById("card-model").innerHTML = '<h5 class="card-title">Loading...</h5>'
+  document.getElementById("card-train").innerHTML = '<h5 class="card-title">Loading...</h5>'
+  document.getElementById("card-reconstruct").innerHTML = '<h5 class="card-title">Loading...</h5>'
+  document.getElementById("card-latent").innerHTML = '<h5 class="card-title">Loading...</h5>'
   
   run(valueSA, valueFL, valueSL, valueEP)
 }
