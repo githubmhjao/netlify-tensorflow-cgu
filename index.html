@@ -1,87 +1,140 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TensorFlow.js: AutoEncoder</title>
+<!doctype html>
+<html lang="en">
 
-  <link rel="stylesheet" href="styles.css">
-  <!-- Import TensorFlow.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
-  <!-- Import tfjs-vis -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
-  
-  <!-- Import the main script file -->
-  <script src="script.js" type="module"></script>
-  
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Import TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <!-- Import tfjs-vis -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+    <!-- Import the main script file -->
+    <script src="script.js" type="module"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>TensorFlow.js: AutoEncoder</title>
 </head>
 
-<body>
-  <div class="header"><h1>Raman Spectrum Analyzed by Neural Network AutoEncoder</h1></div>
-  <div class="half">
-    <div id="container-parameter" class="container">
-      <div class="card-header">Parameter</div>
-      <div class="card-body">
-        <div class="unit-control">
-          <label for="samples" class="unit">Samples</label>         
-          <input type="number" id="samples" class="input-number" value="2" />
-        </div>
-        <div class="unit-control">
-          <label for="dimension" class="unit">Dimension</label>     
-          <input type="text" id="dimension" class="input-number" value="256" readonly />
-        </div>
-        <div class="unit-control">
-          <label for="firstLayer" class="unit">First Layer</label>         
-          <input type="number" id="firstLayer" class="input-number" value="50" />
-        </div>
-        <div class="unit-control">
-          <label for="secondLayer" class="unit">Second Layer</label>         
-          <input type="number" id="secondLayer" class="input-number" value="10" />
-        </div>
-        <div class="unit-control">
-          <label for="latent" class="unit">Latent</label>     
-          <input type="text" id="latent" class="input-number" value="2" readonly />
-        </div>
-        <div class="unit-control">
-          <label for="epochs" class="unit">Epochs</label>         
-          <input type="number" id="epochs" class="input-number" value="10" />
-        </div>
-      </div>
-      <div class="card-footer" id="startTrain" >Start Train</div>
-    </div>
+<body style="background: linear-gradient(
+    237deg,
+    rgba(28, 78, 154, 1) 48%,
+    rgba(44, 110, 206, 1) 85%,
+    rgba(45, 123, 238, 1) 100%
+  )">
     <div class="container">
-      <div class="card-header">Origin Data</div>
-      <div class="card-body" id="container-origin">
-        <div class="converter-title">Loading...</div>
-      </div>
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="text-white">Raman Spectrum Analyzed by Neural Network AutoEncoder</h1>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 mb-4 g-4">
+            <div class="col">
+                <div class="card border-primary h-100" style="box-shadow: 1px 1px 10px 1px #333">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="text-center">Parameters</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <label for="samples" class="col col-form-label">
+                                <h5>Samples</h5>
+                            </label>
+                            <div class="col"><input id="samples" type="number" class="form-control" value="2"></div>
+                        </div>
+                        <div class="row">
+                            <label for="dimension" class="col col-form-label">
+                                <h5>Dimension</h5>
+                            </label>
+                            <div class="col"><input id="dimension" type="text" class="form-control" value="256" readonly></div>
+                        </div>
+                        <div class="row">
+                            <label for="firstLayer" class="col col-form-label">
+                                <h5>first Layer</h5>
+                            </label>
+                            <div class="col"><input id="firstLayer" type="number" class="form-control" value="50"></div>
+                        </div>
+                        <div class="row">
+                            <label for="secondLayer" class="col col-form-label">
+                                <h5>Second Layer</h5>
+                            </label>
+                            <div class="col"><input id="secondLayer" type="number" class="form-control" value="10"></div>
+                        </div>
+                        <div class="row">
+                            <label for="latent" class="col col-form-label">
+                                <h5>Latent</h5>
+                            </label>
+                            <div class="col"><input id="latent" type="text" class="form-control" value="2" readonly></div>
+                        </div>
+                        <div class="row">
+                            <label for="epochs" class="col col-form-label">
+                                <h5>Epochs</h5>
+                            </label>
+                            <div class="col"><input id="epochs" type="number" class="form-control" value="10"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-primary text-white">
+                        <h5 class="text-center">Start Train</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-primary h-100" style="box-shadow: 1px 1px 10px 1px #333">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="text-center">Original Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Loading...</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-primary h-100" style="box-shadow: 1px 1px 10px 1px #333">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="text-center">Model</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Loading...</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-primary h-100" style="box-shadow: 1px 1px 10px 1px #333">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="text-center">Train Metrics</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Loading...</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-primary h-100" style="box-shadow: 1px 1px 10px 1px #333">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="text-center">Reconstruct Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Loading...</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-primary h-100" style="box-shadow: 1px 1px 10px 1px #333">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="text-center">Latent Plot</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" style="height: 18rem">Loading...</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container">
-      <div class="card-header">Model</div>
-      <div class="card-body" id="container-model">
-        <div class="converter-title">Loading...</div>
-      </div>
-    </div>
-  </div>
-  <div class="half">
-    <div class="container">
-      <div class="card-header">Train Metrics</div>
-      <div class="card-body" id="container-train">
-        <div class="converter-title">Loading...</div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="card-header">Reconstruct Data</div>
-      <div class="card-body" id="container-reconstruct">
-        <div class="converter-title">Loading...</div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="card-header">Latent Plot</div>
-      <div class="card-body" id="container-latent">
-        <div class="converter-title">Loading...</div>
-      </div>
-    </div>
-  </div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
 </body>
+
 </html>
