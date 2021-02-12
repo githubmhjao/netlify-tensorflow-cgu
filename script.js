@@ -84,7 +84,7 @@ function convertToTensor(data) {
 
 async function trainModel(model, inputs, labels, epochs) {
   const metrics = ['loss', 'val_loss'];
-  const fitCallbacks = tfvis.show.fitCallbacks(document.getElementById("container-train"), metrics, {callbacks: ["onEpochEnd"]});
+  const fitCallbacks = tfvis.show.fitCallbacks(document.getElementById("card-train"), metrics, {callbacks: ["onEpochEnd"]});
   
   const BATCH_SIZE = 50;
   
@@ -132,13 +132,13 @@ document.getElementById("epochs").onchange = (e) => { valueEP = Number(e.target.
 async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const examples = Array(numExamples).fill(0).map(x => getRandomInt(ramanData.length)).map(x=>ramanData[x]);
-  await showExamples(examples, document.getElementById("container-origin"));
+  await showExamples(examples, document.getElementById("card-origin"));
   
   const PROFILE_WIDTH = 256
   const {model, encoder, decoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
-  document.getElementById("container-model").innerHTML = '<div id="container-encoder"></div><div id="container-decoder"></div>'
-  tfvis.show.modelSummary(document.getElementById('container-encoder'), encoder);
-  tfvis.show.modelSummary(document.getElementById('container-decoder'), decoder);
+  document.getElementById("card-model").innerHTML = '<div id="container-encoder"></div><div id="container-decoder"></div>'
+  tfvis.show.modelSummary(document.getElementById('card-encoder'), encoder);
+  tfvis.show.modelSummary(document.getElementById('card-decoder'), decoder);
   
   tf.util.shuffle(ramanData);
   
@@ -149,18 +149,18 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   const inputs = {train: trainDataTensor, test: testDataTensor}
   const labels = {train: trainLabelTensor, test: testLabelTensor}
   // Train the model
-  document.getElementById("container-train").innerHTML = ""
+  document.getElementById("card-train").innerHTML = ""
   await trainModel(model, inputs, labels, epochs);
   
   const [exampleData, exampleDataTensor, exampleLabel, exampleLabelTensor] = convertToTensor(examples)
   const examplePredTensor = model.predict(exampleDataTensor)
   
   const examplePredArray = convertToArray(examplePredTensor, exampleLabel, numExamples, 256)
-  await showExamples(examplePredArray, document.getElementById("container-reconstruct"));
+  await showExamples(examplePredArray, document.getElementById("card-reconstruct"));
   
   const trainCode = convertToArray(encoder.predict(trainDataTensor), trainLabel, TRAIN_DATA_SIZE, 2)
   
-  await showCodes(trainCode, document.getElementById("container-latent"))
+  await showCodes(trainCode, document.getElementById("card-latent"))
   
 }
 
@@ -175,11 +175,11 @@ function init() {
 
 document.getElementById("startTrain").onclick = () => {
 
-  document.getElementById("container-origin").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("container-model").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("container-train").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("container-reconstruct").innerHTML = '<div class="converter-title">Loading...</div>'
-  document.getElementById("container-latent").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("card-origin").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("card-model").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("card-train").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("card-reconstruct").innerHTML = '<div class="converter-title">Loading...</div>'
+  document.getElementById("card-latent").innerHTML = '<div class="converter-title">Loading...</div>'
   
   run(valueSA, valueFL, valueSL, valueEP)
 }
