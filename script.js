@@ -119,15 +119,14 @@ async function showCodes(codes, container) {
   tfvis.render.scatterplot(container, data, {width, height, zoomToFit: true});
 }
 
-let valueSA = 2
-let valueFL = 50
-let valueSL = 10
-let valueEP = 10
-
-document.getElementById("samples").onchange = (e) => { valueSA = Number(e.target.value) }
-document.getElementById("firstLayer").onchange = (e) => { valueFL = Number(e.target.value) }
-document.getElementById("secondLayer").onchange = (e) => { valueSL = Number(e.target.value) }
-document.getElementById("epochs").onchange = (e) => { valueEP = Number(e.target.value) }
+function getParameters() {
+  const valueSA = Number(document.getElementById('samples').value)
+  const valueFL = Number(document.getElementById('firstLayer').value)
+  const valueSL = Number(document.getElementById('secondLayer').value)
+  const valueEP = Number(document.getElementById('epochs').value)
+  
+  return [valueSA, valueFL, valueSL, valueEP]
+}
 
 async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
@@ -170,22 +169,21 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
 }
 
 function init() {
-  document.getElementById("samples").value = valueSA
-  document.getElementById("firstLayer").value = valueFL
-  document.getElementById("secondLayer").value = valueSL
-  document.getElementById("epochs").value = valueEP
+  const [valueSA, valueFL, valueSL, valueEP] = getParameters()
   
   run(valueSA, valueFL, valueSL, valueEP)
 }
 
 document.getElementById("startTrain").onclick = () => {
+  
+  const [valueSA, valueFL, valueSL, valueEP] = getParameters()
 
   document.getElementById("card-origin").innerHTML = '<h5 class="card-title">Loading...</h5>'
   document.getElementById("card-model").innerHTML = '<h5 class="card-title">Loading...</h5>'
   document.getElementById("card-train").innerHTML = '<h5 class="card-title">Loading...</h5>'
   document.getElementById("card-reconstruct").innerHTML = '<h5 class="card-title">Loading...</h5>'
   document.getElementById("card-latent").innerHTML = '<h5 class="card-title">Loading...</h5>'
-  
+
   run(valueSA, valueFL, valueSL, valueEP)
 }
 
