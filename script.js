@@ -13,10 +13,10 @@ async function showExamples(examples, container) {
     series 
   }
   
-  const width = Math.floor(document.documentElement.clientWidth * 0.25)
-  const height = Math.floor(document.documentElement.clientHeight * 0.25)
+  const width = Math.floor(container.clientWidth)
+  const height = Math.floor(container.clientHeight)
     
-  tfvis.render.linechart(container, data);
+  tfvis.render.linechart(container, data, {width, height});
 }
 
 function getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo) {
@@ -113,8 +113,8 @@ async function showCodes(codes, container) {
   // console.log(seriesCode)
   const data = { values: seriesCode, series: seriesLabel.map(x => String(x)) }
 
-  const width = Math.floor(document.documentElement.clientWidth * 0.25)
-  const height = Math.floor(document.documentElement.clientHeight * 0.25)
+  const width = Math.floor(container.clientWidth * 0.9)
+  const height = Math.floor(container.clientHeight * 0.9)
   
   tfvis.render.scatterplot(container, data, {width, height, zoomToFit: true});
 }
