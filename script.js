@@ -13,8 +13,8 @@ async function showExamples(examples, container) {
     series 
   }
   
-  const width = Math.floor(container.clientWidth)
-  const height = Math.floor(container.clientHeight)
+  const width = Math.floor(container.clientWidth * 0.9)
+  const height = Math.floor(container.clientHeight * 0.9)
     
   tfvis.render.linechart(container, data, {width, height});
 }
@@ -136,6 +136,9 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   
   const PROFILE_WIDTH = 256
   const {model, encoder, decoder} = getModel(PROFILE_WIDTH, numHiddenOne, numHiddenTwo);
+  document.getElementById("card-model").classList.remove('align-items-center')
+  document.getElementById("card-model").classList.add('align-items-evenly')
+  document.getElementById("card-model").classList.add('flex-column')
   document.getElementById("card-model").innerHTML = '<div id="card-encoder"></div><div id="card-decoder"></div>'
   tfvis.show.modelSummary(document.getElementById('card-encoder'), encoder);
   tfvis.show.modelSummary(document.getElementById('card-decoder'), decoder);
@@ -150,6 +153,8 @@ async function run(numExamples, numHiddenOne, numHiddenTwo, epochs) {
   const labels = {train: trainLabelTensor, test: testLabelTensor}
   // Train the model
   document.getElementById("card-train").innerHTML = ""
+  document.getElementById("card-train").classList.remove('d-flex')
+  document.getElementById("card-train").classList.remove('align-items-center')
   await trainModel(model, inputs, labels, epochs);
   
   const [exampleData, exampleDataTensor, exampleLabel, exampleLabelTensor] = convertToTensor(examples)
