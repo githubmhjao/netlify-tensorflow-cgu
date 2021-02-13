@@ -174,16 +174,6 @@ function init() {
   run(valueSA, valueFL, valueSL, valueEP)
 }
 
-document.getElementById("startTrain").onmouseover = () => {
-  document.getElementById("startTrain").classList.remove('bg-primary')
-  document.getElementById("startTrain").classList.add('bg-success')
-};
-
-document.getElementById("startTrain").onmouseout = () => {
-  document.getElementById("startTrain").classList.remove('bg-success')
-  document.getElementById("startTrain").classList.add('bg-primary')
-};
-
 document.getElementById("startTrain").onclick = () => {
   
   const [valueSA, valueFL, valueSL, valueEP] = getParameters()
